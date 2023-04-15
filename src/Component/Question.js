@@ -1,7 +1,7 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, CardContent, Container, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import SimpleDialog from "./SimpleDialog";
-
+import ImageIcon from '@mui/icons-material/Image';
 const Question = () => {
     const [open,setOpen]=useState(false);
     const handleClickOpen=()=>
@@ -32,7 +32,7 @@ const Question = () => {
         Revolutionize Your Assignments: Get Handwritten Assignments With Just a
         Few Clicks!
       </Typography>
-<Box sx={{display:"flex",justifyContent:"center"}}>
+<CardContent sx={{display:"flex",justifyContent:"center"}}>
         <Button
           variant="contained"
           onClick={handleClickOpen}
@@ -40,17 +40,34 @@ const Question = () => {
             display:"block",
             backgroundColor: "black",
             borderRadius: "100px",
-            fontSize: { sm: "1.5vw", lg: "1vw" },
+            fontSize: { sm: "1.5vw",md:"1.2vw", lg: ".8vw" },
             width: "200px",
             height: "65px",
           }}
         >
-          Upload Here
+          Upload Question
         </Button>
-        </Box>
+        </CardContent>
         <SimpleDialog
         open={open}
         onClose={handleClose}/>
+        <Typography sx={{textAlign:"center",fontWeight:"600",mt:"1%"}}>OR</Typography>
+       <CardContent sx={{display:'flex',justifyContent:"center"}}>
+        <Button variant='contained' 
+        sx={{
+          display:"black",
+          backgroundColor:"black",
+          borderRadius:"100px",
+          fontSize: { sm: "1.5vw",md:"1.2vw", lg: ".8vw" },
+          width:"200px",
+          height:"65px"
+
+        }}>
+          
+          <ImageIcon sx={{pr:"3%"}}/>
+          Upload Image
+        </Button>
+        </CardContent >
         </Stack>
     </Box>
   );
