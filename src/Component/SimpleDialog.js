@@ -25,20 +25,63 @@ import {
 import { Fade } from "@mui/material";
 import { SketchPicker, CirclePicker } from "react-color";
 import domtoimage from "dom-to-image";
-
-import React, { useEffect, useRef, useState } from "react";
+import "./FontConverter.css";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { pageStyle } from "../App";
 const steps = ["Submit Question", "Customize Your Page"];
+
 const SimpleDialog = ({ onClose, selectedValue, open }) => {
-  const [open_snackbar, setOpen_SnackBar] = useState(false);
+  const {open_snackbar, setOpen_SnackBar,
+    fontFamily, setFontFamily,
+    fontSize, setFontSize,
+    color, setColor,
+    pageColor, setPageColor,
+    letterSpacing, setLetterSpacing,
+    wordSpacing, setWordSpacing,
+    lineHeight, setLineHeight,
+    fontWeight, setFontWeight,
+    line, setLine,
+    shadow, setShadow,
+    margin, setMargin,
+    marginTop, setMarginTop,
+    width, setWidth,
+    height, setHeight,
+    showColorPicker1, setShowColorPicker1,
+    showColorPicker2, setShowColorPicker2,
+    open_addFont, setOpen_addFont}=useContext(pageStyle)
+  const colorList = [
+    "#ffffff",
+    "#f2f2f2",
+    "#e6e6e6",
+    "#d9d9d9",
+    "#cccccc",
+    "#bfbfbf",
+    "#ffffe6",
+    " #ffffcc",
+    "#ffffb3",
+    "#ffff99",
+    "#e6ffff",
+    "#e6ffe6",
+  ];
+  
   const [question, setQuestion] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState("");
+  const navigate = useNavigate();
   const handleClose = () => {
     onClose(selectedValue);
   };
-  const navigate = useNavigate();
-  let question_Array = useRef([]),
-    count = 0;
+  let question_Array = useRef([]),count = 0;
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [text, setText] = useState(
+    "A hero can be anyone. Even a man doing something as simple and reassuring as putting a coat around a young boy's shoulders to let him know that the world hadn't ended. This is a sample text. Enter your text here to convert to handwritten font."
+    );
+    useEffect(()=>
+    {let p=document.getElementById("p")
+    if (p) {
+      console.log(p.innerHTML.length);
+    }    },[text])
+    
   async function getAnswer(e) {
     question_Array.current = question
       .split("!@#")
@@ -53,6 +96,9 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
     }
     setOpen_SnackBar(false);
   };
+  useEffect(()=>{
+    console.log()
+  },[width])
   useEffect(() => {
     const options = {
       method: "POST",
@@ -80,62 +126,20 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
       .catch((err) => console.error(err));
   }, [currentQuestion]);
 
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
-
   const handleNext = () => {
-    let newSkipped = skipped;
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const [text, setText] = useState(
-    "A hero can be anyone. Even a man doing something as simple and reassuring as putting a coat around a young boy's shoulders to let him know that the world hadn't ended. This is a sample text. Enter your text here to convert to handwritten font."
-  );
-  const [fontFamily, setFontFamily] = useState("'Beth Ellen', cursive");
-  const [fontSize, setFontSize] = useState(17);
-  const [color, setColor] = useState("blue");
-  const [pageColor, setPageColor] = useState("white");
-  const [letterSpacing, setLetterSpacing] = useState(1);
-  const [wordSpacing, setWordSpacing] = useState(1);
-  const [lineHeight, setLineHeight] = useState(30);
-  const [fontWeight, setFontWeight] = useState(300);
-  const [line, setLine] = useState(false);
-  const [shadow, setShadow] = useState(false);
-  const [margin, setMargin] = useState(false);
-  const [marginTop, setMarginTop] = useState(false);
- const[width,setWidth]=useState(590);
- const[height,setHeight]=useState(460);
-  const [showColorPicker1, setShowColorPicker1] = useState(false);
-  const [showColorPicker2, setShowColorPicker2] = useState(false);
- const [open_addFont,setOpen_addFont]=useState(false)
-  const colorList = [
-    "#ffffff",
-    "#f2f2f2",
-    "#e6e6e6",
-    "#d9d9d9",
-    "#cccccc",
-    "#bfbfbf",
-    "#ffffe6",
-    " #ffffcc",
-    "#ffffb3",
-    "#ffff99",
-    "#e6ffff",
-    "#e6ffe6",
-  ];
- const handleOpenAddFont =()=>
- {
-  setOpen_addFont(true)
- }
- const handleCloseAddFont=()=>
- {
-  setOpen_addFont(false)
- }
+  const handleOpenAddFont = () => {
+    setOpen_addFont(true);
+  };
+  const handleCloseAddFont = () => {
+    setOpen_addFont(false);
+  };
   const handleLineHeight = (event, newValue) => {
     setLineHeight(newValue);
   };
@@ -145,7 +149,6 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
   const handleHeight = (event, newValue) => {
     setHeight(newValue);
   };
-
 
   const handleFontWeight = (event, newValue) => {
     setFontWeight(newValue);
@@ -205,6 +208,8 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
             Upload Your Question Here
           </DialogTitle>
           <textarea
+            rows={30}
+            sx={{}}
             id="textarea"
             onChange={(e) => {
               setQuestion(document.getElementById("textarea").value.trim());
@@ -294,7 +299,7 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
                         >
                           Bilbo
                         </MenuItem>
-                       
+
                         <MenuItem
                           style={{ fontFamily: "'Calligraffitti', cursive" }}
                           value={"'Calligraffitti', cursive"}
@@ -359,14 +364,19 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
                         >
                           Kristi
                         </MenuItem>
-                       
+
                         <MenuItem
                           style={{ fontFamily: "'Liu Jian Mao Cao', cursive" }}
                           value={"'Liu Jian Mao Cao', cursive"}
                         >
                           Liu Jian Mao Cao
                         </MenuItem>
-                        <MenuItem sx={{fontFamily:"Lobster"}} value={"Lobster"}>Lobster</MenuItem>
+                        <MenuItem
+                          sx={{ fontFamily: "Lobster" }}
+                          value={"Lobster"}
+                        >
+                          Lobster
+                        </MenuItem>
                         <MenuItem
                           style={{ fontFamily: "'Loved by the King', cursive" }}
                           value={"'Loved by the King', cursive"}
@@ -648,8 +658,10 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
                     )}
                   </div>
                   <Box>
-                    <Button variant="contained" onClick={handleOpenAddFont}>Add Font</Button>
-                    <Dialog open={open_addFont}  onClose={handleCloseAddFont}>
+                    <Button variant="contained" onClick={handleOpenAddFont}>
+                      Add Font
+                    </Button>
+                    <Dialog open={open_addFont} onClose={handleCloseAddFont}>
                       <CardContent>
                         <Typography fontWeight="bold">Instruction</Typography>
                         <Typography></Typography>
@@ -671,7 +683,7 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
                       aria-labelledby="discrete-slider"
                       valueLabelDisplay="auto"
                       onChange={handleLineHeight}
-                      step={.08}
+                      step={0.08}
                       min={10}
                       max={70}
                       color="primary"
@@ -713,7 +725,6 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
                       color="primary"
                     />
                   </div>
-                  
 
                   <div className="linesCheckbox">
                     <Tooltip
@@ -807,8 +818,8 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
                   className="paper"
                   id="page"
                   style={{
-                    width:width,
-                    height:height,
+                    width: width,
+                    height: height,
                     backgroundImage: line
                       ? "repeating-linear-gradient(transparent 0px, transparent 24px, #333333 25px)"
                       : "none",
@@ -825,7 +836,8 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
                   }}
                 >
                   <p
-                   contentEditable={true}
+                  id="p"
+                    contentEditable={true}
                     className="output_text"
                     style={{
                       fontFamily: `${fontFamily}`,
@@ -839,7 +851,6 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
                       borderLeft: margin ? "2px solid #666666" : "none",
                       paddingLeft: margin ? "0.5rem" : "0",
                       paddingTop: marginTop ? "1rem" : "0",
-
                     }}
                   >
                     {text}
@@ -865,9 +876,21 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
         >
           Back
         </Button>
-        <Button variant="contained" color="inherit" onClick={handleNext}>
-          Next
-        </Button>
+        {activeStep === 0 ? (
+          <Button variant="contained" color="inherit" onClick={handleNext}>
+            Next
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: "black" }}
+            onClick={() => {
+              navigate("/complete");
+            }}
+          >
+            Submit
+          </Button>
+        )}
       </DialogContent>
     </Dialog>
   );
