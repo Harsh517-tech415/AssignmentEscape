@@ -20,6 +20,7 @@
 .paper {
     padding: 1rem;
     overflow: hidden;   
+    /* max-height: 50px; */
 }
 
 .paper_input {

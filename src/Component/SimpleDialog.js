@@ -22,34 +22,54 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import { pageStyle } from "../App";
 import { Fade } from "@mui/material";
 import { SketchPicker, CirclePicker } from "react-color";
 import domtoimage from "dom-to-image";
 import "./FontConverter.css";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { pageStyle } from "../App";
 const steps = ["Submit Question", "Customize Your Page"];
 
 const SimpleDialog = ({ onClose, selectedValue, open }) => {
-  const {open_snackbar, setOpen_SnackBar,
-    fontFamily, setFontFamily,
-    fontSize, setFontSize,
-    color, setColor,
-    pageColor, setPageColor,
-    letterSpacing, setLetterSpacing,
-    wordSpacing, setWordSpacing,
-    lineHeight, setLineHeight,
-    fontWeight, setFontWeight,
-    line, setLine,
-    shadow, setShadow,
-    margin, setMargin,
-    marginTop, setMarginTop,
-    width, setWidth,
-    height, setHeight,
-    showColorPicker1, setShowColorPicker1,
-    showColorPicker2, setShowColorPicker2,
-    open_addFont, setOpen_addFont}=useContext(pageStyle)
+  const {
+    open_snackbar,
+    setOpen_SnackBar,
+    fontFamily,
+    setFontFamily,
+    fontSize,
+    setFontSize,
+    color,
+    setColor,
+    pageColor,
+    setPageColor,
+    letterSpacing,
+    setLetterSpacing,
+    wordSpacing,
+    setWordSpacing,
+    lineHeight,
+    setLineHeight,
+    fontWeight,
+    setFontWeight,
+    line,
+    setLine,
+    shadow,
+    setShadow,
+    margin,
+    setMargin,
+    marginTop,
+    setMarginTop,
+    width,
+    setWidth,
+    height,
+    setHeight,
+    showColorPicker1,
+    setShowColorPicker1,
+    showColorPicker2,
+    setShowColorPicker2,
+    open_addFont,
+    setOpen_addFont,
+  } = useContext(pageStyle);
   const colorList = [
     "#ffffff",
     "#f2f2f2",
@@ -64,24 +84,28 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
     "#e6ffff",
     "#e6ffe6",
   ];
-  
+
   const [question, setQuestion] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState("");
   const navigate = useNavigate();
   const handleClose = () => {
     onClose(selectedValue);
   };
-  let question_Array = useRef([]),count = 0;
+  let question_Array = useRef([]),
+    count = 0;
   const [activeStep, setActiveStep] = React.useState(0);
   const [text, setText] = useState(
     "A hero can be anyone. Even a man doing something as simple and reassuring as putting a coat around a young boy's shoulders to let him know that the world hadn't ended. This is a sample text. Enter your text here to convert to handwritten font."
-    );
-    useEffect(()=>
-    {let p=document.getElementById("p")
+  );
+
+  useEffect(() => {
+    let p = document.getElementById("p");
     if (p) {
       console.log(p.innerHTML.length);
-    }    },[text])
-    
+    }
+  }, [text]);
+
+
   async function getAnswer(e) {
     question_Array.current = question
       .split("!@#")
@@ -96,9 +120,7 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
     }
     setOpen_SnackBar(false);
   };
-  useEffect(()=>{
-    console.log()
-  },[width])
+  
   useEffect(() => {
     const options = {
       method: "POST",
@@ -209,7 +231,6 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
           </DialogTitle>
           <textarea
             rows={30}
-            sx={{}}
             id="textarea"
             onChange={(e) => {
               setQuestion(document.getElementById("textarea").value.trim());
@@ -836,7 +857,7 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
                   }}
                 >
                   <p
-                  id="p"
+                    id="p"
                     contentEditable={true}
                     className="output_text"
                     style={{
