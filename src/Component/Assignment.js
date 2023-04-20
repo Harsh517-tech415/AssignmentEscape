@@ -1,28 +1,47 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import lens from "../image/lens.jpg";
 import { pageStyle } from "../App";
-import { Paper, Stack, Typography } from "@mui/material";
-
+import { Box, Button, CardContent, Grid, Paper, Stack, Typography } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 const Assignment = () => {
   const {
-    open_snackbar,setOpen_SnackBar,
-    fontFamily,setFontFamily,
-    fontSize,setFontSize,
-    color,setColor,
-    pageColor,setPageColor,
-    letterSpacing,setLetterSpacing,
-    wordSpacing,setWordSpacing,
-    lineHeight,setLineHeight,
-    fontWeight,setFontWeight,
-    line,setLine,
-    shadow,setShadow,
-    margin,setMargin,
-    marginTop,setMarginTop,
-    width,setWidth,
-    height,setHeight,
-    showColorPicker1,setShowColorPicker1,
-    showColorPicker2,setShowColorPicker2,
-    open_addFont,setOpen_addFont} = useContext(pageStyle);
+    open_snackbar,
+    setOpen_SnackBar,
+    fontFamily,
+    setFontFamily,
+    fontSize,
+    setFontSize,
+    color,
+    setColor,
+    pageColor,
+    setPageColor,
+    letterSpacing,
+    setLetterSpacing,
+    wordSpacing,
+    setWordSpacing,
+    lineHeight,
+    setLineHeight,
+    fontWeight,
+    setFontWeight,
+    line,
+    setLine,
+    shadow,
+    setShadow,
+    margin,
+    setMargin,
+    marginTop,
+    setMarginTop,
+    width,
+    setWidth,
+    height,
+    setHeight,
+    showColorPicker1,
+    setShowColorPicker1,
+    showColorPicker2,
+    setShowColorPicker2,
+    open_addFont,
+    setOpen_addFont,
+  } = useContext(pageStyle);
   const a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
   const [question, setQuestion] = useState([
     "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
@@ -61,17 +80,18 @@ const Assignment = () => {
     "Molestias ex quidem iste repudiandae sit suscipit accusamus nesciunt laudantium! Ipsam non similique ad minima.",
   ]);
   const textDisplay = useRef();
-  const averageCharWidth = 4; 
-  const averageCharsPerWord = 5; 
-  
-  function setText(){  
-      let str=""
-      question.map((item, index) => {
-        str = str + "\n" + item + "\n" + answer[index];
-      });
-      return str;}
-    
-    const text = useRef(setText());
+  const averageCharWidth = 4;
+  const averageCharsPerWord = 5;
+
+  function setText() {
+    let str = "";
+    question.map((item, index) => {
+      str = str + "\n" + item + "\n" + answer[index];
+    });
+    return str;
+  }
+
+  const text = useRef(setText());
 
   const calculateMaxWords = () => {
     const componentArea = width * height;
@@ -84,7 +104,8 @@ const Assignment = () => {
   const current_index = useRef(0);
 
   return (
-    <Stack gap>
+    <>
+    <Grid container  rowSpacing={{xs:3,sm:3,md:3,lg:3,xl:2}}>
       {a.map((item) => {
         text.current.length -
           (maxWords.current + current_index.current - current_index.current) >=
@@ -95,7 +116,7 @@ const Assignment = () => {
                 maxWords.current + current_index.current
               );
               current_index.current = maxWords.current + current_index.current;
-              console.log(textDisplay.current)
+              console.log(textDisplay.current);
             })()
           : (() => {
               textDisplay.current = text.current.substring(
@@ -104,13 +125,17 @@ const Assignment = () => {
               );
             })();
         return (
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{
+            display:{xs:"flex",sm:"flex",md:"flex"},
+            justifyContent:"center"
+          }}>
           <Paper
             elevation={3}
             square={true}
-            onChange={() => {}}
             className="paper"
             id="page"
             style={{
+              
               width: width,
               height: height,
               backgroundImage: line
@@ -152,9 +177,15 @@ const Assignment = () => {
               {textDisplay.current}
             </Typography>
           </Paper>
+          <Button variant="contained" sx={{display:"inline",position:"absolute"}}><EditIcon/></Button>
+          </Grid>
         );
       })}
-    </Stack>
+    </Grid>
+    <CardContent sx={{display:"flex",justifyContent:"center"}}>
+    <Button variant='contained' color="secondary">Download Pdf</Button>
+    </CardContent>
+    </>
   );
 };
 

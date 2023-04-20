@@ -87,13 +87,14 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
 
   const [question, setQuestion] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState("");
+  
   const navigate = useNavigate();
   const handleClose = () => {
     onClose(selectedValue);
   };
   let question_Array = useRef([]),
     count = 0;
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const [text, setText] = useState(
     "A hero can be anyone. Even a man doing something as simple and reassuring as putting a coat around a young boy's shoulders to let him know that the world hadn't ended. This is a sample text. Enter your text here to convert to handwritten font."
   );
@@ -105,11 +106,9 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
     }
   }, [text]);
 
-
+ 
   async function getAnswer(e) {
-    question_Array.current = question
-      .split("!@#")
-      .map((substring) => substring.replace(/\n/g, ""));
+    question_Array.current = question.split("!@#").map((substring) => substring.replace(/\n/g, ""));
     setCurrentQuestion(question_Array.current[count]);
     document.getElementById("textarea").value = "";
     setOpen_SnackBar(true);
@@ -906,6 +905,7 @@ const SimpleDialog = ({ onClose, selectedValue, open }) => {
             variant="contained"
             sx={{ backgroundColor: "black" }}
             onClick={() => {
+
               navigate("/complete");
             }}
           >
